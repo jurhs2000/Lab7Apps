@@ -8,14 +8,17 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.laboratorio5apps.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/menu_home">
+        <action
+            android:id="@+id/action_nav_home_to_nav_add_question"
+            app:destination="@id/nav_add_question" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.laboratorio5apps.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_add_question"
+        android:name="com.example.laboratorio5apps.ui.addQuestion.AddQuestionFragment"
+        android:label="@string/menu_addQuestion"
+        tools:layout="@layout/fragment_add_question" />
 
     <fragment
         android:id="@+id/nav_slideshow"
