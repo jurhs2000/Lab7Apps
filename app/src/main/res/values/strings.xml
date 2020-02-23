@@ -15,4 +15,14 @@
     <string name="menu_send">Send</string>
     <string name="new_quiz">Nueva encuesta</string>
     <string name="list_content_desc">Un icono de lista</string>
+    <string name="About" >About it</string>
+    <string name="all_questions">Questions</string>
+    <string name="answereds">Answereds</string>
+    <string name="menu_all_questions">All questions</string>
+    <string name="menu_answereds">Answereds</string>
+    <string name="menu_question">Question</string>
+    <string name="menu_results">Results</string>
+    <string name="add_your_question">Ingrese la nueva pregunta</string>
+    <string name="question">Pregunta</string>
+    <string name="answer_hint">Escriba su respuesta</string>
 </resources>

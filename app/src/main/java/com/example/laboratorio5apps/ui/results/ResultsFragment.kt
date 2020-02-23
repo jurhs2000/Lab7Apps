@@ -1,4 +1,4 @@
-package com.example.laboratorio5apps.ui.send
+package com.example.laboratorio5apps.ui.results
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.laboratorio5apps.R
 
-class SendFragment : Fragment() {
+class ResultsFragment : Fragment() {
 
-    private lateinit var sendViewModel: SendViewModel
+    private lateinit var resultsViewModel: ResultsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sendViewModel =
-            ViewModelProviders.of(this).get(SendViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_send, container, false)
-        val textView: TextView = root.findViewById(R.id.text_send)
-        sendViewModel.text.observe(this, Observer {
+        resultsViewModel =
+            ViewModelProviders.of(this).get(ResultsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_results, container, false)
+        val textView: TextView = root.findViewById(R.id.text_results)
+        resultsViewModel.text.observe(this, Observer {
             textView.text = it
         })
         return root

@@ -1,4 +1,4 @@
-package com.example.laboratorio5apps.ui.share
+package com.example.laboratorio5apps.ui.about
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.laboratorio5apps.R
 
-class ShareFragment : Fragment() {
+class AboutFragment : Fragment() {
 
-    private lateinit var shareViewModel: ShareViewModel
+    private lateinit var aboutViewModel: AboutViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        shareViewModel =
-            ViewModelProviders.of(this).get(ShareViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_share, container, false)
-        val textView: TextView = root.findViewById(R.id.text_share)
-        shareViewModel.text.observe(this, Observer {
+        aboutViewModel =
+            ViewModelProviders.of(this).get(AboutViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_about, container, false)
+        val textView: TextView = root.findViewById(R.id.text_about)
+        aboutViewModel.text.observe(this, Observer {
             textView.text = it
         })
         return root

@@ -1,13 +1,13 @@
-package com.example.laboratorio5apps.ui.share
+package com.example.laboratorio5apps.ui.results
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ShareViewModel : ViewModel() {
+class ResultsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is share Fragment"
+        value = "This is results Fragment"
     }
     val text: LiveData<String> = _text
 }

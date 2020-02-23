@@ -1,13 +1,13 @@
-package com.example.laboratorio5apps.ui.tools
+package com.example.laboratorio5apps.ui.about
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ToolsViewModel : ViewModel() {
+class AboutViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is tools Fragment"
+        value = "This is slideshow Fragment"
     }
     val text: LiveData<String> = _text
 }
