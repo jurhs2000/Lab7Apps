@@ -7,6 +7,8 @@ import com.example.laboratorio5apps.MainViewModel
 
 class AllQuestionsModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>()
+    private val _text = MutableLiveData<String>().apply {
+        value = MainViewModel.toStringFormat()
+    }
     val text: LiveData<String> = _text
 }

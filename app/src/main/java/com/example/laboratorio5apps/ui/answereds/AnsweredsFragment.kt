@@ -15,6 +15,7 @@ import com.example.laboratorio5apps.ui.allQuestions.AllQuestionsModel
 class AnsweredsFragment : Fragment() {
 
     private lateinit var answeredsModel: AnsweredsModel
+    private lateinit var binding: FragmentAnsweredsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,9 +25,9 @@ class AnsweredsFragment : Fragment() {
         answeredsModel =
             ViewModelProviders.of(this).get(AnsweredsModel::class.java)
         val root = inflater.inflate(R.layout.fragment_answereds, container, false)
-        val binding = DataBindingUtil.inflate<FragmentAnsweredsBinding>(
+        binding = DataBindingUtil.inflate<FragmentAnsweredsBinding>(
             inflater, R.layout.fragment_answereds, container, false)
-
+        binding.model = answeredsModel
         return binding.root
     }
 }

@@ -20,9 +20,14 @@
     <string name="answereds">Answereds</string>
     <string name="menu_all_questions">All questions</string>
     <string name="menu_answereds">Answereds</string>
-    <string name="menu_question">Question</string>
+    <string name="menu_question">Question (%1$d/%2$d)</string>
     <string name="menu_results">Results</string>
     <string name="add_your_question">Ingrese la nueva pregunta</string>
     <string name="question">Pregunta</string>
     <string name="answer_hint">Escriba su respuesta</string>
+    <string name="rating_number">Rating: %.2f</string>
+    <string name="encuestas_number">Encuestas: %1$d</string>
+    <string name="see_answers">Ver Respuestas</string>
+    <string name="avatar_image">Imagen de avatar</string>
+    <string name="menu_about">About it</string>
 </resources>

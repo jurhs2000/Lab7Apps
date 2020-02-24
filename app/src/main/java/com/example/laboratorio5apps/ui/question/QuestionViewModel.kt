@@ -26,4 +26,8 @@ class QuestionViewModel : ViewModel() {
         }
     }
 
+    fun addAnswerToQuestion(answer: String) {
+        MainViewModel.addAnswerToQuestion(_count.value!!,answer)
+    }
+
 }

@@ -19,6 +19,7 @@ import com.example.laboratorio5apps.databinding.FragmentAllQuestionsBinding
 class AllQuestionsFragment : Fragment() {
 
     private lateinit var allQuestionsModel: AllQuestionsModel
+    private lateinit var binding: FragmentAllQuestionsBinding
 
     lateinit var datos: ArrayList<String>
     lateinit var recycler: RecyclerView
@@ -30,12 +31,12 @@ class AllQuestionsFragment : Fragment() {
     ): View? {
         allQuestionsModel =
             ViewModelProviders.of(this).get(AllQuestionsModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_all_questions, container, false)
-        val binding = DataBindingUtil.inflate<FragmentAllQuestionsBinding>(
+        binding = DataBindingUtil.inflate<FragmentAllQuestionsBinding>(
             inflater, R.layout.fragment_all_questions, container, false)
 
 
-        Toast.makeText(context, MainViewModel.getQuizSize().toString(), Toast.LENGTH_SHORT).show()
+        binding.model = allQuestionsModel
+
         recycler = binding.recycler
         recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
@@ -44,7 +45,6 @@ class AllQuestionsFragment : Fragment() {
         var adapter = AdapterData(datos)
         recycler.adapter = adapter
 
-        return root
-        //return binding.root
+        return binding.root
     }
 }

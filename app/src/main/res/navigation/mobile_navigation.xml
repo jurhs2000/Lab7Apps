@@ -31,14 +31,18 @@
     <fragment
         android:id="@+id/nav_about"
         android:name="com.example.laboratorio5apps.ui.about.AboutFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_about"
         tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/nav_results"
         android:name="com.example.laboratorio5apps.ui.results.ResultsFragment"
         android:label="@string/menu_results"
-        tools:layout="@layout/fragment_results" />
+        tools:layout="@layout/fragment_results" >
+        <action
+            android:id="@+id/action_nav_results_to_nav_question"
+            app:destination="@id/nav_question" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_question"
