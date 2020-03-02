@@ -1,6 +1,6 @@
 package com.example.laboratorio5apps
 
-import com.example.laboratorio5apps.models.Question
+import com.example.laboratorio5apps.models.entities.Question
 
 object Results {
 
@@ -21,7 +21,7 @@ object Results {
     fun getRating() : Double {
         var rating: Double = 0.0
         for (quiz in quizes) {
-            rating = rating + quiz.get(0).answer.toDouble()
+            //rating = rating + quiz.get(0).answer.toDouble()
         }
         rating = rating/ quizes.size
         return rating
@@ -32,7 +32,7 @@ object Results {
         for(i in 0..(quizes.size - 1)) {
             result += "Encuesta " + (i+1) +":\n"
             for(j in 0..(quizes.get(i).size - 1)) {
-                result += " - " + quizes.get(i).get(j).question + " : " + quizes.get(i).get(j).answer
+                //result += " - " + quizes.get(i).get(j).question + " : " + quizes.get(i).get(j).answer
             }
             result += "\n"
         }

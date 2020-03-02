@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import com.example.laboratorio5apps.databinding.FragmentAddQuestionBinding
+import com.example.laboratorio5apps.models.entities.Question
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -23,9 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //
-        MainViewModel.addDefaultQuestions()
-        //
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout) //Se puede hacer con el binding

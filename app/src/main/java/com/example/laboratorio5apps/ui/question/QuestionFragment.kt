@@ -33,7 +33,7 @@ class QuestionFragment : Fragment() {
         )
         binding.model = questionViewModel
         //
-        setLabelNavigationTitleBar()
+        //setLabelNavigationTitleBar()
         //
         binding.next.setOnClickListener{view: View ->
             if (!binding.etAnswer.text.toString().equals("") || questionViewModel.count.value!! == 0) {
@@ -44,14 +44,14 @@ class QuestionFragment : Fragment() {
                 }
                 questionViewModel.next()
                 if (questionViewModel.count.value!! < 0) {
-                    MainViewModel.addQuizToQuizes()
+                    //MainViewModel.addQuizToQuizes()
                     view.findNavController().navigate(R.id.action_nav_question_to_nav_results)
                 } else if (questionViewModel.count.value!! == 0) {
-                    setLabelNavigationTitleBar()
+                    //setLabelNavigationTitleBar()
                     binding.etAnswer.visibility = View.GONE
                     binding.ratingBar.visibility = View.VISIBLE
                 } else {
-                    setLabelNavigationTitleBar()
+                    //setLabelNavigationTitleBar()
                     Toast.makeText(context, "Faltan " + (questionViewModel.count.value!!).plus(1) + " preguntas!", Toast.LENGTH_SHORT).show()
                 }
                 binding.etAnswer.text.clear()
@@ -65,7 +65,7 @@ class QuestionFragment : Fragment() {
         return binding.root
     }
 
-    fun setLabelNavigationTitleBar() {
+    /*fun setLabelNavigationTitleBar() {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.menu_question, (MainViewModel.getQuizSize().minus((questionViewModel.count.value!!))), MainViewModel.getQuizSize())
-    }
+    }*/
 }

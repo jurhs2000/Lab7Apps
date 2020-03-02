@@ -1,59 +1,42 @@
 package com.example.laboratorio5apps
 
-import androidx.lifecycle.ViewModel
-import com.example.laboratorio5apps.models.Question
-import java.util.*
-import kotlin.collections.ArrayList
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import com.example.laboratorio5apps.models.DataBase
+import com.example.laboratorio5apps.models.entities.Question
+import com.example.laboratorio5apps.repositories.QuestionRepository
+import kotlinx.coroutines.launch
 
-object MainViewModel {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var quiz: MutableList<Question> = mutableListOf<Question>()
+    // The ViewModel maintains a reference to the repository to get data.
+    private val questionRepository: QuestionRepository
+    // LiveData gives us updated words when they change.
+    val allQuestions: LiveData<List<Question>>
 
-    fun addDefaultQuestions() {
-        val q1: Question = Question("¿Qué le pareció nuestro servicio?","")
-        quiz.add(q1)
-        val q2: Question = Question("¿Tiene algún comentario o sugerencia?","")
-        quiz.add(q2)
+    init {
+        // Gets reference to WordDao from WordRoomDatabase to construct
+        // the correct WordRepository.
+        val questionDAO = DataBase.getInstance(application, viewModelScope).questionDAO()
+        questionRepository = QuestionRepository(questionDAO)
+        allQuestions = questionRepository.allQuestions
     }
 
-    fun getQuestionbyIndex(index: Int): String {
-        return quiz.get(index).question
+    /**
+     * The implementation of insert() in the database is completely hidden from the UI.
+     * Room ensures that you're not doing any long running operations on
+     * the main thread, blocking the UI, so we don't need to handle changing Dispatchers.
+     * ViewModels have a coroutine scope based on their lifecycle called
+     * viewModelScope which we can use here.
+     */
+    fun insert(question: Question) = viewModelScope.launch {
+        questionRepository.insert(question)
     }
 
-    fun getAnswerbyIndex(index: Int): String {
-        return quiz.get(index).answer
+    override fun onCleared() {
+        super.onCleared()
+        questionRepository.cancelJob()
     }
-
-    fun getQuizSize(): Int {
-        return quiz.size
-    }
-
-    fun addNewQuestion(question: String) {
-        var q1: Question = Question(question,"")
-        quiz.add(q1)
-    }
-
-    fun addAnswerToQuestion(indexQuestion: Int, answer: String) {
-        quiz.get(indexQuestion).answer = answer
-    }
-
-    fun addQuizToQuizes() {
-        val newQuiz: ArrayList<Question> = arrayListOf<Question>()
-        for (q in quiz) {
-            val q1: Question = Question(q.question,q.answer)
-            newQuiz.add(q1)
-        }
-        Results.addQuiz(newQuiz)
-    }
-
-    fun toStringFormat(): String {
-        var result = ""
-        for(i in 0..(quiz.size - 1)) {
-            result += "Pregunta " + (i + 1) + ": "
-            result += quiz.get(quiz.size - i - 1).question
-            result += "\n"
-        }
-        return result
-    }
-
 }

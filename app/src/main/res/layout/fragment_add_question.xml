@@ -13,16 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/etNewQuestion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:text="@{model.question}"
+            android:text=""
             android:hint="@string/question"
-            android:inputType="textPersonName"
+            android:inputType="textAutoComplete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

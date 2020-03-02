@@ -15,10 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.laboratorio5apps.MainViewModel
 import com.example.laboratorio5apps.R
 import com.example.laboratorio5apps.databinding.FragmentAllQuestionsBinding
+import kotlinx.android.synthetic.main.fragment_question.*
 
 class AllQuestionsFragment : Fragment() {
 
-    private lateinit var allQuestionsModel: AllQuestionsModel
+    private lateinit var allQuestionsViewModel: AllQuestionsViewModel
     private lateinit var binding: FragmentAllQuestionsBinding
 
     lateinit var datos: ArrayList<String>
@@ -29,21 +30,22 @@ class AllQuestionsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        allQuestionsModel =
-            ViewModelProviders.of(this).get(AllQuestionsModel::class.java)
+        allQuestionsViewModel =
+            ViewModelProviders.of(this).get(AllQuestionsViewModel::class.java)
         binding = DataBindingUtil.inflate<FragmentAllQuestionsBinding>(
             inflater, R.layout.fragment_all_questions, container, false)
 
+        binding.model = allQuestionsViewModel
 
-        binding.model = allQuestionsModel
+        recycler = binding.recyclerview
 
-        recycler = binding.recycler
-        recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-        datos = arrayListOf("sdfsf","sdsfdsf","ffffff","fgdgfdgd","fdgdgdgdfg")
-
-        var adapter = AdapterData(datos)
+        var adapter = AllQuestionsAdapter(context!!)
         recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(context)
+
+        allQuestionsViewModel.allQuestions.observe(this, Observer { questions ->
+            questions?.let { adapter.setQuestions(it) }
+        })
 
         return binding.root
     }

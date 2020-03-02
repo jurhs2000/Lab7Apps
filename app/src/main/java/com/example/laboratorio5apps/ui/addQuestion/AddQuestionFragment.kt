@@ -1,7 +1,9 @@
 package com.example.laboratorio5apps.ui.addQuestion
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +18,7 @@ import androidx.navigation.findNavController
 import com.example.laboratorio5apps.MainViewModel
 import com.example.laboratorio5apps.R
 import com.example.laboratorio5apps.databinding.FragmentAddQuestionBinding
+import com.example.laboratorio5apps.models.entities.Question
 
 
 class AddQuestionFragment : Fragment() {
@@ -42,13 +45,18 @@ class AddQuestionFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.save_bar -> {
             // User chose the "Settings" item, show the app settings UI...
-            MainViewModel.addNewQuestion(binding.etNewQuestion.text.toString())
-            Toast.makeText(context, "Se guardo la pregunta", Toast.LENGTH_SHORT).show()
-            view?.findNavController()?.navigate(R.id.action_nav_add_question_to_nav_home)
-            //cerrar teclado
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view?.windowToken, 0)
-            true
+            if (TextUtils.isEmpty(binding.etNewQuestion.text)) {
+                Toast.makeText(context, "Ingrese la pregunta a guardar", Toast.LENGTH_SHORT).show()
+                false
+            } else {
+                addQuestionViewModel.insert(Question(0,binding.etNewQuestion.text.toString(),1,false))
+                Toast.makeText(context, "Se guardo la pregunta", Toast.LENGTH_SHORT).show()
+                view?.findNavController()?.navigate(R.id.action_nav_add_question_to_nav_home)
+                //cerrar teclado
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                true
+            }
         }
         else -> {
             // If we got here, the user's action was not recognized.
