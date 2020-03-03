@@ -29,6 +29,7 @@ class AddQuestionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var addQuestionViewModel: AddQuestionViewModel
     private lateinit var binding: FragmentAddQuestionBinding
+    private var spinnerPos: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,11 +64,11 @@ class AddQuestionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.save_bar -> {
             // User chose the "Settings" item, show the app settings UI...
-            if (TextUtils.isEmpty(binding.etNewQuestion.text)) {
+            if (TextUtils.isEmpty(binding.etNewQuestion.text) || spinnerPos < 0) {
                 Toast.makeText(context, "Ingrese la pregunta a guardar", Toast.LENGTH_SHORT).show()
                 false
             } else {
-                addQuestionViewModel.insert(Question(0,binding.etNewQuestion.text.toString(),1,false))
+                addQuestionViewModel.insert(Question(0,binding.etNewQuestion.text.toString(),spinnerPos + 1,false))
                 Toast.makeText(context, "Se guardo la pregunta", Toast.LENGTH_SHORT).show()
                 view?.findNavController()?.navigate(R.id.action_nav_add_question_to_nav_home)
                 //cerrar teclado
@@ -84,7 +85,7 @@ class AddQuestionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(p0: AdapterView<*>, p1: View?, p2: Int, p3: Long) {
-        Toast.makeText(context, p0.getItemAtPosition(p2).toString(), Toast.LENGTH_LONG).show()
+        spinnerPos = p2
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {

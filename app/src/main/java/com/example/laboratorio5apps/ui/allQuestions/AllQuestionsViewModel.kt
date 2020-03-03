@@ -2,11 +2,9 @@ package com.example.laboratorio5apps.ui.allQuestions
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.laboratorio5apps.MainViewModel
 import com.example.laboratorio5apps.models.DataBase
 import com.example.laboratorio5apps.models.entities.Question
 import com.example.laboratorio5apps.repositories.QuestionRepository
-import kotlinx.coroutines.launch
 
 class AllQuestionsViewModel(application: Application) : AndroidViewModel(application) {
 

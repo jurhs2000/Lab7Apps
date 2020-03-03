@@ -43,59 +43,15 @@ class QuestionRepository(val questionDAO: QuestionDAO) {
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     //Data
-
-    var question = MutableLiveData<Question?>()
     //obtiene todas nomas asi por la igualacion
     val allQuestions: LiveData<List<Question>> = questionDAO.getAll()
-    //se obtienen hasta que se llama el metodo getallquestions
-    var allQuestionsLiveData: LiveData<List<Question>> = MutableLiveData()
-
-    //init
-
-    init {
-        initializeTonight()
-    }
-
-    private fun initializeTonight() {
-        uiScope.launch {
-            //question.value = getQuestionFromDatabase()
-        }
-    }
 
     //Metodos crud
     suspend fun insert(question: Question) {
         uiScope.launch {
-            async(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
                 questionDAO.insert(question)
-            }.await()
-        }
-    }
-
-    fun getAllQuestions() {
-        uiScope.launch {
-            val movies: LiveData<List<Question>> = async(Dispatchers.IO) {
-                questionDAO.getAll()
-            }.await()
-            allQuestionsLiveData = movies
-        }
-    }
-
-    fun otherGetAllQuestions() {
-        uiScope.launch {
-            allQuestionsLiveData = withContext(Dispatchers.IO) {
-                var questions: LiveData<List<Question>> = questionDAO.getAll()
-                questions
             }
-        }
-    }
-
-    suspend fun getQuestionFromDatabase(id: Long): Question? {
-        return withContext(Dispatchers.IO) {
-            var question = questionDAO.get(id)
-            if (question?.isDefault == true) {
-                question = null
-            }
-            question
         }
     }
 
