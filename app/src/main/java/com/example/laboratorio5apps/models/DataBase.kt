@@ -21,16 +21,23 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.laboratorio5apps.models.DAOs.AnswerDAO
+import com.example.laboratorio5apps.models.DAOs.PollDAO
 import com.example.laboratorio5apps.models.DAOs.QuestionDAO
+import com.example.laboratorio5apps.models.entities.Answer
+import com.example.laboratorio5apps.models.entities.Poll
 import com.example.laboratorio5apps.models.entities.Question
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-@Database(entities = [Question::class], version = 1, exportSchema = false)
+@Database(entities = [Question::class, Answer::class, Poll::class], version = 4, exportSchema = false)
 abstract class DataBase: RoomDatabase() {
 
-    //abstract val questionDAO: QuestionDAO
     abstract fun questionDAO(): QuestionDAO
+    abstract fun answerDAO(): AnswerDAO
+    abstract fun pollDAO(): PollDAO
 
     private class DataBaseCallback(
         private val scope: CoroutineScope
@@ -46,15 +53,15 @@ abstract class DataBase: RoomDatabase() {
         }
 
         suspend fun populateDatabase(questionDAO: QuestionDAO) {
-            // Delete all content here.
-            questionDAO.deleteAll()
-
-            // Add sample words.
-            var question = Question(0,"¿Qué le pareció nuestro servicio?",3,true)
-            questionDAO.insert(question)
-            question = Question(0,"¿Tiene algún comentario o sugerencia?",1,true)
-            questionDAO.insert(question)
-
+            withContext(Dispatchers.IO) {
+                if (questionDAO.count() == 0) {
+                    // Add sample questions.
+                    var question = Question(0,"¿Qué le pareció nuestro servicio?",3,true)
+                    questionDAO.insert(question)
+                    question = Question(0,"¿Tiene algún comentario o sugerencia?",1,true)
+                    questionDAO.insert(question)
+                }
+            }
         }
     }
 
@@ -72,8 +79,8 @@ abstract class DataBase: RoomDatabase() {
                         context.applicationContext,
                         DataBase::class.java,
                         "lab6_db"
-                    ).fallbackToDestructiveMigration().addCallback(DataBaseCallback(scope))
-                        .allowMainThreadQueries().build()
+                    ).fallbackToDestructiveMigration().addCallback(DataBaseCallback(scope)).build()
+                        //.allowMainThreadQueries().build()
                     /**
                      * AllowMainThreadQueries sirve para permitir peticiones a la base de datos
                      * usando el hilo principal, lo cual puede bloquear el ui, pero, en este

@@ -1,5 +1,6 @@
 package com.example.laboratorio5apps.ui.addQuestion
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +10,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
@@ -21,7 +25,7 @@ import com.example.laboratorio5apps.databinding.FragmentAddQuestionBinding
 import com.example.laboratorio5apps.models.entities.Question
 
 
-class AddQuestionFragment : Fragment() {
+class AddQuestionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var addQuestionViewModel: AddQuestionViewModel
     private lateinit var binding: FragmentAddQuestionBinding
@@ -39,6 +43,20 @@ class AddQuestionFragment : Fragment() {
         )
         binding.setLifecycleOwner(this)
         binding.model = addQuestionViewModel
+        //
+        val spinner: Spinner = binding.spinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+            context,
+            R.array.types_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+        binding.spinner.onItemSelectedListener = this
         return binding.root
     }
 
@@ -63,5 +81,13 @@ class AddQuestionFragment : Fragment() {
             // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>, p1: View?, p2: Int, p3: Long) {
+        Toast.makeText(context, p0.getItemAtPosition(p2).toString(), Toast.LENGTH_LONG).show()
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

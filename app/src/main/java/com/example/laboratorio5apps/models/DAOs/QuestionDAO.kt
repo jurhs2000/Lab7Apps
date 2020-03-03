@@ -37,4 +37,7 @@ interface QuestionDAO {
 
     @Query("DELETE FROM question_table")
     fun deleteAll()
+
+    @Query(value = "SELECT COUNT(id) FROM question_table")
+    fun count(): Int
 }

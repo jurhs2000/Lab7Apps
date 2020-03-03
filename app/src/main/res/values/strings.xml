@@ -30,4 +30,10 @@
     <string name="see_answers">Ver Respuestas</string>
     <string name="avatar_image">Imagen de avatar</string>
     <string name="menu_about">About it</string>
+
+    <string-array name="types_array">
+        <item>Text</item>
+        <item>Number</item>
+        <item>Rating</item>
+    </string-array>
 </resources>

@@ -45,6 +45,7 @@ class AllQuestionsAdapter internal constructor(context: Context): RecyclerView.A
 
     inner class ViewHolderData(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val questionItemView: TextView = itemView.findViewById(R.id.idQuestion)
+        val dsfdf: TextView = itemView.findViewById(R.id.ertetr)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderData {
@@ -55,6 +56,7 @@ class AllQuestionsAdapter internal constructor(context: Context): RecyclerView.A
     override fun onBindViewHolder(holder: ViewHolderData, position: Int) {
         val current = questions[position]
         holder.questionItemView.text = current.question
+        holder.dsfdf.text = current.id.toString()
     }
 
     internal fun setQuestions(questions: List<Question>) {
