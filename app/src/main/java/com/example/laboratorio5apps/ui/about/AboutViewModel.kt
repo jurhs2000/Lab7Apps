@@ -11,11 +11,11 @@ class AboutViewModel : ViewModel() {
     }
     val name: LiveData<String> = _name
     private val _course = MutableLiveData<String>().apply {
-        value = "Apps y Videojuegos - Laboratorio 5"
+        value = "Apps y Videojuegos - Laboratorio 6"
     }
     val course: LiveData<String> = _course
     private val _description = MutableLiveData<String>().apply {
-        value = "Aplicacion de encuestas utilizando LiveData y Navigations"
+        value = "Aplicacion de encuestas utilizando Persistencia con Room y corutinas"
     }
     val description: LiveData<String> = _description
 }

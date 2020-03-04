@@ -29,15 +29,15 @@ interface QuestionDAO {
     @Query("DELETE FROM question_table WHERE is_default = 0")
     fun clear()
 
-    @Query("SELECT * FROM question_table WHERE id = :key")
+    @Query("SELECT * FROM question_table WHERE question_id = :key")
     fun get(key: Long): Question?
 
-    @Query("SELECT * FROM question_table ORDER BY id DESC")
+    @Query("SELECT * FROM question_table ORDER BY question_id DESC")
     fun getAll(): LiveData<List<Question>>
 
     @Query("DELETE FROM question_table")
     fun deleteAll()
 
-    @Query(value = "SELECT COUNT(id) FROM question_table")
+    @Query(value = "SELECT COUNT(question_id) FROM question_table")
     fun count(): Int
 }

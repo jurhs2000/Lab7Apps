@@ -2,7 +2,6 @@ package com.example.laboratorio5apps.ui.answereds
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.laboratorio5apps.Results
 import com.example.laboratorio5apps.models.DataBase
 import com.example.laboratorio5apps.models.entities.Question
 import com.example.laboratorio5apps.repositories.QuestionRepository

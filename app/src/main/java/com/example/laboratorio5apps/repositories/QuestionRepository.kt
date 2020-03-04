@@ -42,15 +42,44 @@ class QuestionRepository(val questionDAO: QuestionDAO) {
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    //init
+    init {
+        initialize()
+    }
+
+    fun initialize() {
+        uiScope.launch {
+            getCount()
+        }
+    }
+
     //Data
     //obtiene todas nomas asi por la igualacion
-    val allQuestions: LiveData<List<Question>> = questionDAO.getAll()
+    val allQuestions = questionDAO.getAll()
+    var count: Int = -1
+    //lateinit var question: LiveData<Question>
 
     //Metodos crud
     suspend fun insert(question: Question) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 questionDAO.insert(question)
+            }
+        }
+    }
+
+    suspend fun getQuestion(id: Long): Question? {
+        return withContext(Dispatchers.IO) {
+            val question = questionDAO.get(id)
+            question
+        }
+    }
+
+    suspend fun getCount() {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                val size: Int = questionDAO.count()
+                count = size
             }
         }
     }

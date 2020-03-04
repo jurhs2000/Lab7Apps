@@ -1,8 +1,6 @@
 package com.example.laboratorio5apps.ui.addQuestion
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -14,12 +12,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.example.laboratorio5apps.MainViewModel
 import com.example.laboratorio5apps.R
 import com.example.laboratorio5apps.databinding.FragmentAddQuestionBinding
 import com.example.laboratorio5apps.models.entities.Question

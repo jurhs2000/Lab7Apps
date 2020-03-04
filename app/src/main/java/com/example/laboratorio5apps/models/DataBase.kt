@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@Database(entities = [Question::class, Answer::class, Poll::class], version = 4, exportSchema = false)
+@Database(entities = [Question::class, Answer::class, Poll::class], version = 7, exportSchema = false)
 abstract class DataBase: RoomDatabase() {
 
     abstract fun questionDAO(): QuestionDAO

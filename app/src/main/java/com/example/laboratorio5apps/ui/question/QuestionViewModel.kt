@@ -1,33 +1,59 @@
 package com.example.laboratorio5apps.ui.question
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.laboratorio5apps.MainViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.laboratorio5apps.models.DataBase
+import com.example.laboratorio5apps.models.entities.Answer
+import com.example.laboratorio5apps.models.entities.Poll
+import com.example.laboratorio5apps.models.entities.Question
+import com.example.laboratorio5apps.repositories.AnswerRepository
+import com.example.laboratorio5apps.repositories.PollRepository
+import com.example.laboratorio5apps.repositories.QuestionRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-class QuestionViewModel : ViewModel() {
+class QuestionViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _count = MutableLiveData<Int>().apply {
-        //value = MainViewModel.getQuizSize() - 1
+    // The ViewModel maintains a reference to the repository to get data.
+    private val questionRepository: QuestionRepository
+    private val answerRepository: AnswerRepository
+    private val pollRepository: PollRepository
+
+    val allQuestions: LiveData<List<Question>>
+    var lastId: Int = -1
+
+    init {
+        // Gets reference to QuestionDAO from RoomDatabase to construct
+        // the correct QuestionRepository.
+        val questionDAO = DataBase.getInstance(application, viewModelScope).questionDAO()
+        questionRepository = QuestionRepository(questionDAO)
+        val answerDAO = DataBase.getInstance(application, viewModelScope).answerDAO()
+        answerRepository = AnswerRepository(answerDAO)
+        val pollDAO = DataBase.getInstance(application, viewModelScope).pollDAO()
+        pollRepository = PollRepository(pollDAO)
+        allQuestions = questionRepository.allQuestions
     }
-    val count: LiveData<Int>
-        get() = _count
 
-    private val _question = MutableLiveData<String>().apply {
-        //value = MainViewModel.getQuestionbyIndex(_count.value!!)
+    private fun insertAnswer(answer: Answer) = viewModelScope.launch {
+        answerRepository.insert(answer)
     }
-    val question: LiveData<String>
-        get() = _question
 
-    fun next() {
-        _count.value = (_count.value!!).minus(1)
-        if (_count.value!! >= 0) {
-            //_question.value = MainViewModel.getQuestionbyIndex(_count.value!!)
+    fun addAnswerToQuestion(answerT: String, answerN: Int, answerD: Double, questionId: Long)
+        = viewModelScope.launch {
+        answerRepository.insert(Answer(0, lastId.toLong(), questionId, answerT, answerN, answerD))
+    }
+
+    fun addPoll() {
+        viewModelScope.launch {
+            async {
+                pollRepository.insert(Poll(0))
+            }.await()
         }
+        lastId = pollRepository.lastId
     }
 
-    fun addAnswerToQuestion(answer: String) {
-        //MainViewModel.addAnswerToQuestion(_count.value!!,answer)
+    override fun onCleared() {
+        super.onCleared()
+        questionRepository.cancelJob()
     }
-
 }

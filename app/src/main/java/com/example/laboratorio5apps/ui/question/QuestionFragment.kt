@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,15 +11,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import androidx.navigation.get
-import com.example.laboratorio5apps.MainViewModel
 import com.example.laboratorio5apps.R
 import com.example.laboratorio5apps.databinding.FragmentQuestionBinding
+import com.example.laboratorio5apps.models.entities.Question
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class QuestionFragment : Fragment() {
 
     private lateinit var questionViewModel: QuestionViewModel
     private lateinit var binding: FragmentQuestionBinding
+
+
+    private lateinit var questions: List<Question>
+    private var count = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,39 +36,60 @@ class QuestionFragment : Fragment() {
         )
         binding.model = questionViewModel
         //
-        //setLabelNavigationTitleBar()
+        questionViewModel.allQuestions.observe(this, Observer {
+            questions = it
+            binding.question.text = it.get(count).question
+            setLabelNavigationTitleBar()
+            setVisibleType()
+        })
         //
         binding.next.setOnClickListener{view: View ->
-            if (!binding.etAnswer.text.toString().equals("") || questionViewModel.count.value!! == 0) {
-                if (questionViewModel.count.value!! > 0) {
-                    questionViewModel.addAnswerToQuestion(binding.etAnswer.text.toString())
+            if (!binding.etAnswer.text.toString().equals("") || !binding.etAnswerNumber.text.toString().equals("")
+                || questions.get(count).type == 3) {
+                //crear encuesta
+                questionViewModel.addPoll()
+                //
+                if (questions.get(count).type != 3) {
+                    questionViewModel.addAnswerToQuestion(binding.etAnswer.text.toString(),0,0.0,questions.get(count).id)
+                } else if(questions.get(count).type != 2) {
+                    questionViewModel.addAnswerToQuestion("",binding.etAnswerNumber.text.toString().toInt(), 0.0,questions.get(count).id)
                 } else {
-                    questionViewModel.addAnswerToQuestion(binding.ratingBar.rating.toString())
+                    questionViewModel.addAnswerToQuestion("",0,binding.ratingBar.rating.toString().toDouble(),questions.get(count).id)
                 }
-                questionViewModel.next()
-                if (questionViewModel.count.value!! < 0) {
-                    //MainViewModel.addQuizToQuizes()
+                count++
+                setLabelNavigationTitleBar()
+                if (count >= questions.size) {
                     view.findNavController().navigate(R.id.action_nav_question_to_nav_results)
-                } else if (questionViewModel.count.value!! == 0) {
-                    //setLabelNavigationTitleBar()
-                    binding.etAnswer.visibility = View.GONE
-                    binding.ratingBar.visibility = View.VISIBLE
                 } else {
-                    //setLabelNavigationTitleBar()
-                    Toast.makeText(context, "Faltan " + (questionViewModel.count.value!!).plus(1) + " preguntas!", Toast.LENGTH_SHORT).show()
+                    setVisibleType()
                 }
                 binding.etAnswer.text.clear()
+                binding.etAnswerNumber.text.clear()
             } else {
                 Toast.makeText(context, "Responda esta pregunta para avanzar", Toast.LENGTH_SHORT).show()
             }
         }
-        questionViewModel.question.observe(this, Observer {
-            binding.question.text = it
-        })
         return binding.root
     }
 
-    /*fun setLabelNavigationTitleBar() {
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.menu_question, (MainViewModel.getQuizSize().minus((questionViewModel.count.value!!))), MainViewModel.getQuizSize())
-    }*/
+    fun setVisibleType() {
+        binding.question.text = questions.get(count).question
+        if (questions.get(count).type == 3) {
+            binding.etAnswer.visibility = View.GONE
+            binding.etAnswerNumber.visibility = View.GONE
+            binding.ratingBar.visibility = View.VISIBLE
+        } else if (questions.get(count).type == 2) {
+            binding.etAnswer.visibility = View.GONE
+            binding.etAnswerNumber.visibility = View.VISIBLE
+            binding.ratingBar.visibility = View.GONE
+        } else {
+            binding.etAnswer.visibility = View.VISIBLE
+            binding.etAnswerNumber.visibility = View.GONE
+            binding.ratingBar.visibility = View.GONE
+        }
+    }
+
+    fun setLabelNavigationTitleBar() {
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.menu_question, count + 1, questions.size)
+    }
 }
