@@ -28,6 +28,7 @@ class AllQuestionsFragment : Fragment() {
     ): View? {
         allQuestionsViewModel =
             ViewModelProviders.of(this).get(AllQuestionsViewModel::class.java)
+
         binding = DataBindingUtil.inflate<FragmentAllQuestionsBinding>(
             inflater, R.layout.fragment_all_questions, container, false)
 

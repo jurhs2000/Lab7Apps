@@ -16,7 +16,7 @@ interface AnswerDAO {
     @Query("SELECT * FROM answer_table WHERE id = :key")
     fun get(key: Long): Answer?
 
-    @Query("SELECT * FROM answer_table ORDER BY id DESC")
+    @Query("SELECT * FROM answer_table")
     fun getAll(): LiveData<List<Answer>>
 
     @Query("DELETE FROM answer_table")

@@ -1,18 +1,13 @@
 package com.example.laboratorio5apps.ui.allQuestions
 
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.laboratorio5apps.R
 import com.example.laboratorio5apps.models.entities.Question
-import kotlinx.android.synthetic.main.list_question_recycler.view.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class AllQuestionsAdapter internal constructor(context: Context): RecyclerView.Adapter<AllQuestionsAdapter.ViewHolderData>() {
 
@@ -44,8 +39,8 @@ class AllQuestionsAdapter internal constructor(context: Context): RecyclerView.A
     private var questions = emptyList<Question>() // Cached copy of words
 
     inner class ViewHolderData(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val questionItemView: TextView = itemView.findViewById(R.id.idQuestion)
-        val dsfdf: TextView = itemView.findViewById(R.id.ertetr)
+        val idQuestion: TextView = itemView.findViewById(R.id.idQuestionCard)
+        val question: TextView = itemView.findViewById(R.id.questionCard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderData {
@@ -55,8 +50,8 @@ class AllQuestionsAdapter internal constructor(context: Context): RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolderData, position: Int) {
         val current = questions[position]
-        holder.questionItemView.text = current.question
-        holder.dsfdf.text = current.id.toString()
+        holder.idQuestion.text = current.id.toString()
+        holder.question.text = current.question
     }
 
     internal fun setQuestions(questions: List<Question>) {

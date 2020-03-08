@@ -25,20 +25,37 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/idQuestionCard"
+                android:id="@+id/idPollCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="1dp"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/questionCard"
+                android:id="@+id/idAnswerCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp" />
+
+            <TextView
+                android:id="@+id/questionAnswerCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp" />
+
+            <TextView
+                android:id="@+id/answerTextCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp" />
+
+            <TextView
+                android:id="@+id/answerNumberCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="1dp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
