@@ -21,13 +21,12 @@ class AnswerRepository(val answerDAO: AnswerDAO) {
     //Data
     //obtiene todas nomas asi por la igualacion
     val allAnswers: LiveData<List<Answer>> = answerDAO.getAll()
+    val rating = answerDAO.ratingMean()
 
     //Metodos crud
     suspend fun insert(answer: Answer) {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                answerDAO.insert(answer)
-            }
+        withContext(Dispatchers.IO) {
+            answerDAO.insert(answer)
         }
     }
 

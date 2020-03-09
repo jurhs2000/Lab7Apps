@@ -17,6 +17,7 @@ package com.example.laboratorio5apps.models
  */
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -27,12 +28,10 @@ import com.example.laboratorio5apps.models.DAOs.QuestionDAO
 import com.example.laboratorio5apps.models.entities.Answer
 import com.example.laboratorio5apps.models.entities.Poll
 import com.example.laboratorio5apps.models.entities.Question
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlin.concurrent.thread
 
-@Database(entities = [Question::class, Answer::class, Poll::class], version = 7, exportSchema = false)
+@Database(entities = [Question::class, Answer::class, Poll::class], version = 13, exportSchema = false)
 abstract class DataBase: RoomDatabase() {
 
     abstract fun questionDAO(): QuestionDAO

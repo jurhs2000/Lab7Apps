@@ -1,5 +1,6 @@
 package com.example.laboratorio5apps.repositories
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.laboratorio5apps.models.DAOs.PollDAO
 import com.example.laboratorio5apps.models.DAOs.QuestionDAO
@@ -18,38 +19,27 @@ class PollRepository(val pollDAO: PollDAO) {
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    //init
-    init {
-        initialize()
-    }
-
-    fun initialize() {
-        uiScope.launch {
-            getLastId()
-        }
-    }
-
     //Data
     //obtiene todas nomas asi por la igualacion
     val allPolls: LiveData<List<Poll>> = pollDAO.getAll()
-    var lastId: Int = -1
+    var lastId = -1
+    val count = pollDAO.count()
 
     //Metodos crud
     suspend fun insert(poll: Poll) {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
+            async {
                 pollDAO.insert(poll)
-            }
+            }.await()
         }
     }
 
-    suspend fun getLastId() {
-        uiScope.launch {
-            withContext(Dispatchers.IO) {
-                val last: Int = pollDAO.getLastId()
+    suspend fun getLastId(): Int {
+            return withContext(Dispatchers.IO) {
+                val last = pollDAO.getLastId()
                 lastId = last
+                last
             }
-        }
     }
 
 }

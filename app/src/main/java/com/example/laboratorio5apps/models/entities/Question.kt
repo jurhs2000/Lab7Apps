@@ -21,8 +21,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "question_table",
-    indices = arrayOf(Index(value = arrayOf("question_id"), unique = true)))
+@Entity(tableName = "question_table")
 data class Question (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "question_id")

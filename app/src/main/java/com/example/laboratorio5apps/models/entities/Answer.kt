@@ -4,9 +4,9 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 
 @Entity(tableName = "answer_table", foreignKeys = [
-    ForeignKey(entity = Question::class, parentColumns = ["question_id"], childColumns = ["question_id"], onDelete = CASCADE),
-    ForeignKey(entity = Poll::class, parentColumns = ["poll_id"], childColumns = ["poll_id"], onDelete = CASCADE)
-], indices = arrayOf(Index(value = arrayOf("question_id"), unique = true), Index(value = arrayOf("poll_id"), unique = true)))
+    ForeignKey(entity = Question::class, parentColumns = ["question_id"], childColumns = ["question_id"], onDelete = CASCADE, onUpdate = CASCADE),
+    ForeignKey(entity = Poll::class, parentColumns = ["poll_id"], childColumns = ["poll_id"], onDelete = CASCADE, onUpdate = CASCADE)
+], indices = arrayOf(Index(value = arrayOf("question_id"), unique = false), Index(value = arrayOf("poll_id"), unique = false)))
 data class Answer (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
